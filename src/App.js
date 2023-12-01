@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+
+// Import your components for login and home
+import Login from './components/Login';
+import Home from './components/Home';
+
+const isAuthenticated = () => {
+  const accessToken = localStorage.getItem('token');
+  return !!accessToken; // Returns true if there is an access token, false otherwise
+};
+
+// PrivateRoute component to handle protected routes
+const PrivateRoute = ({ component: Component }) => {
+  if (isAuthenticated()) {
+    return <Component />;
+  } else {
+    // Redirect to the sign-in page if not authenticated
+    return <Navigate to="/login" />;
+  }
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+      <Route path="/" element={<PrivateRoute component={Home} />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   );
 }
 
