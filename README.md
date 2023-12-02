@@ -10,7 +10,7 @@ git clone https://github.com/aniketxpawar/banking-system-backend.git
 ### `npm install`
 ### `npm start`
 
-### `cd banking-system-frontend`
+### `cd banking-system-backend`
 ### `npm install`
 ### `npm start`
 
