@@ -12,25 +12,20 @@ const Login = () => {
 
     try {
         //const response = await api.login({ email, password });
-        const response = await api.login({ email, password });
+        const response = await api.bankerLogin({ email, password });
         console.log(response)
       if (response.status === 200) {
         toast.success(response.data.message);
         localStorage.setItem('userId', response.data.userId);
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userType', 'user');
-        navigate('/')
+        localStorage.setItem('userType', 'banker');
+        navigate('/dashboard')
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       toast.error('Something went wrong!');
     }
-  };
-
-  const handleBankerLogin = () => {
-    // Redirect to banker login page
-    navigate('/banker-login');
   };
 
   return (
@@ -40,7 +35,7 @@ const Login = () => {
   reverseOrder={false}
 />
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-3xl font-semibold mb-6 text-center text-blue-600">Login</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-center text-blue-600">Banker Login</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-6">
             <label htmlFor="email" className="block text-blue-600">Email</label>
@@ -73,12 +68,6 @@ const Login = () => {
             Login
           </button>
         </form>
-        <div className="text-center mt-4">
-          {/* Link/button to banker login */}
-          <span className="text-blue-500 cursor-pointer" onClick={handleBankerLogin}>
-            Login as a banker
-          </span>
-        </div>
       </div>
     </div>
   );
